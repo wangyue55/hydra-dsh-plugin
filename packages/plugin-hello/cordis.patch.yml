@@ -1,0 +1,7 @@
+# @hydra-dsh/plugin-hello 的 Bundle 层：profile 安装本包后此行生效。
+# 用户可在自己的 cordis.patch.yml 里按 id 覆盖 config 或 disabled 此行。
+- insert:
+    - id: hydra-hello
+      name: '@hydra-dsh/plugin-hello'
+      config:
+        greeting: Hello
