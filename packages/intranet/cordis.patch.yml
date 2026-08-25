@@ -1,0 +1,15 @@
+# @hydra-dsh/intranet：内网工具行叠加在 dsh-base 之上。
+# 凭据值绝不落在这里：两个工具通过配置默认的凭据引用名
+#（INTRANET_WIKI_* / INTRANET_GITLAB_*）在每次调用时从 credentials
+# 服务或启动环境解析。
+# 注意：本包已包含 wiki/gitlab 两件，勿与它们的独立安装并存（行 id 会重复）。
+- insert:
+    # wiki 写路径挡在审批缝后：ask 让每次 intranet_wiki_apply_write 都经
+    # ctx.approval，在无审批能力的组合里失败关闭。
+    - id: intranet-tool-wiki
+      name: '@hydra-dsh/plugin-intranet-wiki'
+      config:
+        applyWriteApproval: ask
+
+    - id: intranet-tool-gitlab
+      name: '@hydra-dsh/plugin-intranet-gitlab'

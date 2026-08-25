@@ -1,0 +1,45 @@
+{
+  "name": "@hydra-dsh/intranet",
+  "version": "0.0.0",
+  "description": "内网能力全家桶：Wiki 读写（写入过审批）+ GitLab 代码分析，一装齐",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangyue55/hydra-dsh-plugin.git",
+    "directory": "packages/intranet"
+  },
+  "files": [
+    "cordis.patch.yml"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "catalog": {
+      "status": "stable",
+      "platform": "all"
+    }
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hydra-dsh/plugin-intranet-gitlab": "workspace:^",
+    "@hydra-dsh/plugin-intranet-wiki": "workspace:^"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis-plugin-include": "^1.0.6",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.19.0",
+    "js-yaml": "^4.2.0",
+    "typescript": "^6.0.3"
+  }
+}

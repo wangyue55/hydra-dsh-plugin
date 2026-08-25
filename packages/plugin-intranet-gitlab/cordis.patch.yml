@@ -1,0 +1,6 @@
+# @hydra-dsh/plugin-intranet-gitlab 独立安装时的 Bundle 层。
+# 全部配置字段有默认值；覆盖示例见包 README。
+# 注意：@hydra-dsh/intranet 全家桶已包含本行，二者不要同时安装。
+- insert:
+    - id: intranet-tool-gitlab
+      name: '@hydra-dsh/plugin-intranet-gitlab'
