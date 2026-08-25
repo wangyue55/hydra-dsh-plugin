@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOUR-GITHUB-USER/hydra-dsh-plugins.git",
+    "url": "git+https://github.com/wangyue55/hydra-dsh-plugin.git",
     "directory": "packages/plugin-hello"
   },
   "main": "lib/index.js",
