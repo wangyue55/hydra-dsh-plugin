@@ -35,6 +35,14 @@ pnpm changeset                # 记录一次发布变更
 - **版本从 `0.0.0` 起步**：minor changeset 使首发恰好 0.1.0；手动发布必须 `version-packages` 先于 `release`（否则会把 0.0.0 发出去）。
 - 文件以恰好一个换行结尾。
 
+## 变更流程
+
+- **一切改动（代码与文档同等）走 feature 分支 → push → PR → CI 绿 → 仓库所有者合并，不直推 main。** PR 是唯一的审阅与合并通道；改动已在分支上时也不补推 main。
+- 分支命名：`feature/<topic>` / `fix/<topic>` / `docs/<topic>`。
+- 提交信息用约定式前缀（`feat` / `fix` / `docs` / `test` / `chore`），一个提交聚焦一件事。
+- PR 描述写清变更摘要与验证证据：跑了哪些门禁、真机验证了什么。发布类变更随 PR 携带 changeset（见质量门）。
+- 合并后删除特性分支（本地与远端），本地 main 及时 `git pull` 同步。
+
 ## 质量门（合并前提）
 
 - `pnpm test` 与 `pnpm typecheck` 全绿；新代码走 TDD（先有失败测试再实现）。
