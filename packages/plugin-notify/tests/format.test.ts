@@ -45,6 +45,14 @@ describe('formatNotification', () => {
     })
   })
 
+  it('clips by code points, never splitting surrogate pairs', () => {
+    const reason = { kind: 'error', error: { message: '💥'.repeat(85), code: 'UNKNOWN' } } as TurnEndReason
+    expect(formatNotification(reason)).toEqual({
+      title: '❌ dsh · 任务出错',
+      body: `${'💥'.repeat(80)}…`,
+    })
+  })
+
   it('uses the error line alone when duration is unknown', () => {
     const reason = { kind: 'error', error: { message: 'boom', code: 'UNKNOWN' } } as TurnEndReason
     expect(formatNotification(reason)).toEqual({

@@ -34,7 +34,8 @@ export function formatNotification(reason: TurnEndReason, durationMs?: number): 
       return { title: '⚠️ dsh · 达到输出上限', body: duration }
     case 'error': {
       const firstLine = reason.error.message.split('\n', 1)[0] ?? ''
-      const clipped = firstLine.length > 80 ? `${firstLine.slice(0, 80)}…` : firstLine
+      const chars = Array.from(firstLine)
+      const clipped = chars.length > 80 ? `${chars.slice(0, 80).join('')}…` : firstLine
       return { title: '❌ dsh · 任务出错', body: duration === '' ? clipped : `${duration} · ${clipped}` }
     }
     default:
