@@ -16,7 +16,7 @@ cp -R packages/plugin-hello packages/plugin-<name>
 逐处修改：
 
 - `package.json`：`name`（`@hydra-dsh/plugin-<name>`）、`description`（中文一句话——它同时是 npm 文案和目录表"说明"列）、`dsh.catalog`（新插件从 `status: experimental` 起步）、`version` 保持 `0.0.0`；
-- `cordis.patch.yml`：行 `id` 与包名。**每个出现在目录表里的插件都必须带 `dsh.bundle` + 最小 patch**——没有它的包 `add` 后不激活任何层，目录表的安装命令就成了谎言（设置卡曾因此返工）；只有纯库（供插件 import、不供用户启用）才省略 `dsh.bundle`；
+- `cordis.patch.yml`：行 `id` 与包名。**每个出现在目录表里的插件都必须带 `dsh.bundle` + 最小 patch**——没有它的包 `add` 后不激活任何层，目录表的安装命令就成了谎言；只有纯库（供插件 import、不供用户启用）才省略 `dsh.bundle`；
 - `src/` 与 `tests/`：清成自己的最小骨架，**保留契约测试**（具名导出、无 default、Config 默认值）；
 - `tsconfig.json`：源码用到 `process` / `fetch` / `Buffer` 等 Node 全局时补 `"types": ["node"]`（基础配置的 lib 只有 ES2022，无 DOM——fetch 一族的类型也来自 @types/node；`HeadersInit` 这类纯 DOM 类型用 `Record<string, string>` 等具体类型替代）。
 
