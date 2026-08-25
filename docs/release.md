@@ -28,7 +28,13 @@ pnpm version-packages   # 先跑：消费 changeset、写版本号与 CHANGELOG
 pnpm release            # 后跑。跳过上一步会把 0.0.0 发出去
 ```
 
-首次发布 checklist：npm 组织 `@hydra-dsh` 已创建；`NPM_TOKEN`（automation token）已配进仓库 secrets；包名二次确认；发布后 `npm view <包名> version` 验证可见。
+首次发布 checklist：npm 组织 `@hydra-dsh` 已创建；`NPM_TOKEN`（automation token）已配进仓库 secrets；包名二次确认；发布后 `npm view <包名> version` 验证可见；**meta-bundle 端到端验证**——依赖物化这一步只有发布后才真实可验（本地 link 安装解析不到成员包），用一次性 `DSH_HOME` 走完整用户流程：
+
+```sh
+DSH_HOME=/tmp/dsh-publish-verify dsh plugin --profile t add @hydra-dsh/intranet
+DSH_HOME=/tmp/dsh-publish-verify dsh --profile t --dump-config   # 三个成员行齐
+DSH_HOME=/tmp/dsh-publish-verify dsh --profile t                 # 启动无错即通过，完后 rm -rf /tmp/dsh-publish-verify
+```
 
 ## dsh 升级适配流程
 

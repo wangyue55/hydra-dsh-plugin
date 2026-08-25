@@ -16,7 +16,7 @@ dsh plugin --profile web update @hydra-dsh/plugin-notify
 dsh plugin --profile web remove @hydra-dsh/plugin-notify
 ```
 
-`--profile web` 是 dsh 的默认 Web profile；其他 profile 换名字即可。命令会把包装进 `~/.dsh/profiles/<name>/` 并自动登记/移除对应的配置层。
+`--profile web` 是 dsh 的默认 Web profile；其他 profile 换名字即可。命令会把包装进 `~/.dsh/profiles/<name>/` 并自动登记/移除对应的配置层。卸载不影响已保存的凭据（`~/.dsh/.credentials.yaml` 独立于插件存在），重装后无需重填。
 
 ## 生效边界：什么要重启，什么不用
 

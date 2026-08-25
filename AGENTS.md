@@ -38,7 +38,7 @@ pnpm changeset                # 记录一次发布变更
 ## 质量门（合并前提）
 
 - `pnpm test` 与 `pnpm typecheck` 全绿；新代码走 TDD（先有失败测试再实现）。
-- 新插件同 PR 必须携带：包 README（含与 Schema 一致的配置表）、`dsh.catalog` 字段、changeset、`pnpm gen:catalog` 后的 README。
+- 新插件同 PR 必须携带：包 README（含与 Schema 一致的配置表）、`dsh.catalog` 字段、`dsh.bundle` + 最小 `cordis.patch.yml`（纯库除外——目录表里的安装命令必须真能激活）、changeset、`pnpm gen:catalog` 后的 README。
 - 行为变更（配置键、默认值、模型可见文案等）同 PR 更新包 README 与 changeset。
 
 ## 文档规则
