@@ -13,3 +13,8 @@
 
     - id: intranet-tool-gitlab
       name: '@hydra-dsh/plugin-intranet-gitlab'
+
+    # 凭据卡片：Host 半边服务 intranet 设置命名空间，Plugins 设置页据此渲染；
+    # 值经 credentials 服务保存，绝不进设置文档。
+    - id: intranet-settings-card
+      name: '@hydra-dsh/plugin-intranet-settings-card'

@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@hydra-dsh/plugin-intranet-gitlab": "workspace:^",
+    "@hydra-dsh/plugin-intranet-settings-card": "workspace:^",
     "@hydra-dsh/plugin-intranet-wiki": "workspace:^"
   },
   "devDependencies": {

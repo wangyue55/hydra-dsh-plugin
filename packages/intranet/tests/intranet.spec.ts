@@ -31,7 +31,7 @@ describe('dsh-intranet bundle', () => {
         ? (patch as { insert?: { id?: string; name?: string; config?: Record<string, unknown> }[] }).insert ?? []
         : [],
     )
-    expect(rows.map(row => row.id)).toEqual(['intranet-tool-wiki', 'intranet-tool-gitlab'])
+    expect(rows.map(row => row.id)).toEqual(['intranet-tool-wiki', 'intranet-tool-gitlab', 'intranet-settings-card'])
     // The write policy is this bundle's one explicit choice; the credential
     // references stay on the packages' defaults.
     expect(rows[0]?.config).toEqual({ applyWriteApproval: 'ask' })

@@ -11,6 +11,7 @@ DeepSeek Harness（dsh）第三方插件集合：每个插件是一个独立的 
 | [`@hydra-dsh/plugin-intranet-gitlab`](packages/plugin-intranet-gitlab) | 内网 GitLab 代码分析工具：项目解析、线索驱动的范围发现、有界读取与影响分析 | all | 稳定 | `dsh plugin --profile web add @hydra-dsh/plugin-intranet-gitlab` |
 | [`@hydra-dsh/plugin-intranet-wiki`](packages/plugin-intranet-wiki) | 内网 Wiki 工具：预算受控的页面读取 + 两步式回写，执行步经人工审批 | all | 稳定 | `dsh plugin --profile web add @hydra-dsh/plugin-intranet-wiki` |
 | [`@hydra-dsh/plugin-notify`](packages/plugin-notify) | macOS 任务完成/出错系统通知：每轮 turn 结束弹通知，带状态与耗时 | macOS | 稳定 | `dsh plugin --profile web add @hydra-dsh/plugin-notify` |
+| [`@hydra-dsh/plugin-intranet-settings-card`](packages/plugin-intranet-settings-card) | 内网凭据设置卡：在 Web 设置页 Plugins 标签页填写 INTRANET_* 凭据，值经 credentials 服务保存 | web | 实验 | `dsh plugin --profile web add @hydra-dsh/plugin-intranet-settings-card` |
 | [`@hydra-dsh/plugin-hello`](packages/plugin-hello) | 模板插件：可配置问候语的 hydra_greet 工具，新插件从复制它开始 | all | 模板 | `dsh plugin --profile web add @hydra-dsh/plugin-hello` |
 <!-- catalog:end -->
 
