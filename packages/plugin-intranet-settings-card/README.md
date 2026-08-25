@@ -4,15 +4,13 @@
 
 ## 安装
 
-随 [`@hydra-dsh/intranet`](../intranet) 全家桶安装（推荐，卡片行已含在内）。单独安装本包不会自动激活——它不带独立配置层，需要你在 profile 的 `cordis.patch.yml` 手写插入行：
+随 [`@hydra-dsh/intranet`](../intranet) 全家桶安装（推荐，卡片行已含在内），或独立安装：
 
-```yaml
-- insert:
-    - id: intranet-settings-card
-      name: '@hydra-dsh/plugin-intranet-settings-card'
+```sh
+dsh plugin --profile web add @hydra-dsh/plugin-intranet-settings-card
 ```
 
-重启 profile 生效。仅 Web profile 有意义（`platform: web`）。
+重启 profile 生效。仅 Web profile 有意义（`platform: web`）。**与全家桶互斥**（同装会导致配置行 id 重复）。
 
 ## 行为
 

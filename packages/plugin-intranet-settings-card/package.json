@@ -20,12 +20,16 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "lib"
+    "lib",
+    "cordis.patch.yml"
   ],
   "publishConfig": {
     "access": "public"
   },
   "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
     "client": {
       "inject": [
         "@deepseek-ai/dsh-client-connection",

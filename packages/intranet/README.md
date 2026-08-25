@@ -8,16 +8,17 @@
 dsh plugin --profile web add @hydra-dsh/intranet
 ```
 
-重启 profile 生效。**与两个成员插件的独立安装互斥**（同装会导致配置行 id 重复）；只想要单件时直接装对应成员包。
+重启 profile 生效。**与成员插件的独立安装互斥**（同装会导致配置行 id 重复）；只想要单件时直接装对应成员包——三个成员都支持独立安装。
 
 ## 内容
 
-本包自身无任何运行时代码——实质是一层配置补丁，插入两行：
+本包自身无任何运行时代码——实质是一层配置补丁，插入三行：
 
 | 行 id | 插件 | 预设 |
 |---|---|---|
 | `intranet-tool-wiki` | `@hydra-dsh/plugin-intranet-wiki` | `applyWriteApproval: ask` |
 | `intranet-tool-gitlab` | `@hydra-dsh/plugin-intranet-gitlab` | 全默认 |
+| `intranet-settings-card` | `@hydra-dsh/plugin-intranet-settings-card` | 全默认 |
 
 ## 凭据
 
