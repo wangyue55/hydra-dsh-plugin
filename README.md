@@ -7,6 +7,7 @@ DeepSeek Harness（dsh）第三方插件集合，独立于 dsh 仓库开发、�
 | 包 | 说明 | 安装 |
 |---|---|---|
 | [`@hydra-dsh/plugin-hello`](packages/plugin-hello) | 模板插件：可配置问候语的 `hydra_greet` 工具 | `dsh plugin --profile web add @hydra-dsh/plugin-hello` |
+| [`@hydra-dsh/plugin-notify`](packages/plugin-notify) | macOS 任务完成/出错系统通知（每轮 turn 结束，状态 + 耗时） | `dsh plugin --profile web add @hydra-dsh/plugin-notify` |
 
 ## 用户侧使用
 
