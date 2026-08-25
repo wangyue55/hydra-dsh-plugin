@@ -12,6 +12,9 @@ describe('formatDuration', () => {
   it('zero-pads seconds past a minute', () => {
     expect(formatDuration(185_000)).toBe('3m05s')
   })
+  it('renders the exact minute boundary', () => {
+    expect(formatDuration(60_000)).toBe('1m00s')
+  })
 })
 
 describe('formatNotification', () => {
@@ -61,6 +64,18 @@ describe('formatNotification', () => {
       title: '❌ dsh · 任务出错',
       body: 'boom',
     })
+  })
+
+  it('keeps an exactly-80-char line unclipped and clips at 81', () => {
+    const at80 = { kind: 'error', error: { message: 'x'.repeat(80), code: 'UNKNOWN' } } as TurnEndReason
+    expect(formatNotification(at80)!.body).toBe('x'.repeat(80))
+    const at81 = { kind: 'error', error: { message: 'x'.repeat(81), code: 'UNKNOWN' } } as TurnEndReason
+    expect(formatNotification(at81)!.body).toBe(`${'x'.repeat(80)}…`)
+  })
+
+  it('drops the separator when the error message is empty', () => {
+    const reason = { kind: 'error', error: { message: '', code: 'UNKNOWN' } } as TurnEndReason
+    expect(formatNotification(reason, 42_000)).toEqual({ title: '❌ dsh · 任务出错', body: '耗时 42s' })
   })
 
   it.each(['aborted', 'interrupted', 'blocked', 'some-future-kind'])(

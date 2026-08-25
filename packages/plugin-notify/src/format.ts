@@ -33,11 +33,12 @@ export function formatNotification(reason: TurnEndReason, durationMs?: number): 
     case 'max-tokens':
       return { title: '⚠️ dsh · 达到输出上限', body: duration }
     case 'error': {
-      const firstLine = reason.error.message.split('\n', 1)[0] ?? ''
+      const firstLine = reason.error.message.split('\n', 1)[0]
       // 按码点截断（Array.from），不是 UTF-16 单元——避免切裂代理对。
       const chars = Array.from(firstLine)
       const clipped = chars.length > 80 ? `${chars.slice(0, 80).join('')}…` : firstLine
-      return { title: '❌ dsh · 任务出错', body: duration === '' ? clipped : `${duration} · ${clipped}` }
+      const body = clipped === '' ? duration : duration === '' ? clipped : `${duration} · ${clipped}`
+      return { title: '❌ dsh · 任务出错', body }
     }
     default:
       // TurnEndReasonMap 是 merge-extensible 联合：aborted（用户亲手取消）、

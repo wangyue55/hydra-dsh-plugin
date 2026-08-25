@@ -17,7 +17,7 @@ export function buildOsascriptArgs(request: NotificationRequest): string[] {
   const script = request.sound === ''
     ? 'display notification (item 1 of argv) with title (item 2 of argv)'
     : 'display notification (item 1 of argv) with title (item 2 of argv) sound name (item 3 of argv)'
-  const args = ['-e', 'on run argv', '-e', script, '-e', 'end run', request.body, request.title]
+  const args = ['-e', 'on run argv', '-e', script, '-e', 'end run', '--', request.body, request.title]
   if (request.sound !== '') args.push(request.sound)
   return args
 }

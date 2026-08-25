@@ -103,4 +103,27 @@ describe('apply', () => {
       expect(warn).toHaveBeenCalledTimes(1)
     })
   })
+
+  it('ignores unrelated event types', () => {
+    withPlatform('darwin', () => {
+      const listeners = mount()
+      const listener = listeners.get('session/event')!
+      listener(session, { type: 'step/start', seq: 1, time: 1_000, data: { turn: 1, step: 1 } })
+      expect(deliverMock).not.toHaveBeenCalled()
+    })
+  })
+
+  it('keys turn starts per session', () => {
+    withPlatform('darwin', () => {
+      const listeners = mount()
+      const listener = listeners.get('session/event')!
+      const other = { id: 'session-2' }
+      listener(session, turnStart(1_000))
+      listener(other, { type: 'turn/start', seq: 1, time: 5_000, data: { turn: 1 } })
+      listener(session, turnEnd(43_000, { kind: 'completed' }))
+      expect(deliverMock).toHaveBeenLastCalledWith({ title: '✅ dsh · 任务完成', body: '耗时 42s', sound: '' })
+      listener(other, { type: 'turn/end', seq: 2, time: 65_000, data: { turn: 1, reason: { kind: 'completed' } } })
+      expect(deliverMock).toHaveBeenLastCalledWith({ title: '✅ dsh · 任务完成', body: '耗时 1m00s', sound: '' })
+    })
+  })
 })

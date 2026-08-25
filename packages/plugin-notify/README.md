@@ -19,7 +19,7 @@ dsh plugin --profile web add @hydra-dsh/plugin-notify
 | `max-tokens` | ⚠️「dsh · 达到输出上限」+ 耗时 |
 | `aborted` / `interrupted` / `blocked` | 不通知（亲手取消、崩溃恢复标记、内部拒绝路径） |
 
-耗时来自会话日志的事件时间差，格式 `42s` / `3m05s`。
+耗时来自会话日志的事件时间差，格式 `42s` / `3m05s`；未观察到本轮起点时（如插件在轮中途才加载）正文省略耗时。
 
 ## 配置
 

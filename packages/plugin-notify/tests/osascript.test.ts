@@ -7,7 +7,7 @@ describe('buildOsascriptArgs', () => {
       '-e', 'on run argv',
       '-e', 'display notification (item 1 of argv) with title (item 2 of argv)',
       '-e', 'end run',
-      'B', 'T',
+      '--', 'B', 'T',
     ])
   })
 
@@ -16,17 +16,27 @@ describe('buildOsascriptArgs', () => {
       '-e', 'on run argv',
       '-e', 'display notification (item 1 of argv) with title (item 2 of argv) sound name (item 3 of argv)',
       '-e', 'end run',
-      'B', 'T', 'Glass',
+      '--', 'B', 'T', 'Glass',
     ])
   })
 
   it('passes hostile copy verbatim as argv, never into the script source', () => {
     const args = buildOsascriptArgs({ title: '"t" & (do shell script "true")', body: 'a\nb"', sound: '' })
-    expect(args.slice(0, 6)).toEqual([
+    expect(args.slice(0, 7)).toEqual([
       '-e', 'on run argv',
       '-e', 'display notification (item 1 of argv) with title (item 2 of argv)',
       '-e', 'end run',
+      '--',
     ])
-    expect(args.slice(6)).toEqual(['a\nb"', '"t" & (do shell script "true")'])
+    expect(args.slice(7)).toEqual(['a\nb"', '"t" & (do shell script "true")'])
+  })
+
+  it('keeps a dash-leading body as a positional via the -- terminator', () => {
+    expect(buildOsascriptArgs({ title: 'T', body: '-e', sound: '' })).toEqual([
+      '-e', 'on run argv',
+      '-e', 'display notification (item 1 of argv) with title (item 2 of argv)',
+      '-e', 'end run',
+      '--', '-e', 'T',
+    ])
   })
 })
