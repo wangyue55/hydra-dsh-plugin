@@ -2,6 +2,8 @@
 
 面向仓库维护者：版本策略、发布 runbook、dsh 升级适配、退役流程与安全。
 
+> **当前状态：npm 发布暂缓，Release 工作流已手动禁用**（`gh workflow disable Release`）。changeset 照常记录、随 PR 累积；插件安装走本地目录或 git 直装（见[用户手册](user-guide.md)）。恢复发布时依次：注册 npm 组织 `@hydra-dsh` → 配置仓库 secret `NPM_TOKEN` → 仓库设置里允许 Actions 创建 PR（Settings → Actions → General → Workflow permissions）→ `gh workflow enable Release`，下一次 push 即恢复全流程。
+
 ## 版本策略
 
 - 各包独立 semver（changesets 独立模式）。插件语境的判级：**major** = 用户必须动手（配置键改名/删除、行为不兼容）；**minor** = 新能力、新配置项（带默认值即可）；**patch** = 修复与文案。
