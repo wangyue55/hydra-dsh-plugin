@@ -1,7 +1,7 @@
 {
   "name": "@hydra-dsh/plugin-notify",
   "version": "0.0.0",
-  "description": "macOS turn-end notifications for DeepSeek Harness: status + duration per finished turn",
+  "description": "macOS 任务完成/出错系统通知：每轮 turn 结束弹通知，带状态与耗时",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -28,6 +28,10 @@
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
+    },
+    "catalog": {
+      "status": "stable",
+      "platform": "macOS"
     }
   },
   "engines": {

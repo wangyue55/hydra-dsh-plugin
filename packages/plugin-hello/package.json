@@ -1,7 +1,7 @@
 {
   "name": "@hydra-dsh/plugin-hello",
-  "version": "0.1.0",
-  "description": "Configurable greeting tool for DeepSeek Harness — the template plugin of hydra-dsh-plugins",
+  "version": "0.0.0",
+  "description": "模板插件：可配置问候语的 hydra_greet 工具，新插件从复制它开始",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -28,6 +28,10 @@
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
+    },
+    "catalog": {
+      "status": "template",
+      "platform": "all"
     }
   },
   "engines": {
