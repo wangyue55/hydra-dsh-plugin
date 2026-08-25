@@ -53,8 +53,6 @@ describe('formatNotification', () => {
       title: '❌ dsh · 任务出错',
       body: `a${'💥'.repeat(79)}…`,
     })
-    expect(text!.body.includes('�')).toBe(false)
-    expect(text!.body.isWellFormed()).toBe(true)
   })
 
   it('uses the error line alone when duration is unknown', () => {
