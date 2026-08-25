@@ -46,11 +46,15 @@ describe('formatNotification', () => {
   })
 
   it('clips by code points, never splitting surrogate pairs', () => {
-    const reason = { kind: 'error', error: { message: '💥'.repeat(85), code: 'UNKNOWN' } } as TurnEndReason
-    expect(formatNotification(reason)).toEqual({
+    // 'a' 让第 80 个 UTF-16 单元落在代理对中间：朴素 slice 会产出孤立代理项。
+    const reason = { kind: 'error', error: { message: `a${'💥'.repeat(85)}`, code: 'UNKNOWN' } } as TurnEndReason
+    const text = formatNotification(reason)
+    expect(text).toEqual({
       title: '❌ dsh · 任务出错',
-      body: `${'💥'.repeat(80)}…`,
+      body: `a${'💥'.repeat(79)}…`,
     })
+    expect(text!.body.includes('�')).toBe(false)
+    expect(text!.body.isWellFormed()).toBe(true)
   })
 
   it('uses the error line alone when duration is unknown', () => {
