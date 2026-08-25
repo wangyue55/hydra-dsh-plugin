@@ -1,0 +1,9 @@
+# @hydra-dsh/plugin-intranet-wiki 独立安装时的 Bundle 层。
+# applyWriteApproval 为必填：ask 让每次 intranet_wiki_apply_write 都经
+# ctx.approval 审批，在无审批能力的组合里失败关闭。
+# 注意：@hydra-dsh/intranet 全家桶已包含本行，二者不要同时安装。
+- insert:
+    - id: intranet-tool-wiki
+      name: '@hydra-dsh/plugin-intranet-wiki'
+      config:
+        applyWriteApproval: ask
