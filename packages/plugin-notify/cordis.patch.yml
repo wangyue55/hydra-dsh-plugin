@@ -1,0 +1,7 @@
+# @hydra-dsh/plugin-notify 的 Bundle 层：profile 安装本包后此行生效。
+# 用户可在自己的 cordis.patch.yml 里按 id 覆盖 config 或 disabled 此行。
+- insert:
+    - id: hydra-notify
+      name: '@hydra-dsh/plugin-notify'
+      config:
+        sound: ''
