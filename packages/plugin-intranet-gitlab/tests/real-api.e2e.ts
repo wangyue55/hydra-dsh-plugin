@@ -3,7 +3,7 @@
 // read-only.
 import { afterEach, describe, expect, it } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
-import { CallId } from '@deepseek-ai/dsh-llm'
+import { ToolCallId } from '@deepseek-ai/dsh-llm'
 import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
 import ToolRuntime from '@deepseek-ai/dsh-tools'
 import * as tool from '../src/index.ts'
@@ -34,7 +34,7 @@ describe.skipIf(!hasTarget)('intranet GitLab real-API', () => {
     await ctx.plugin(tool, {})
     const result = await ctx.tools.execute({
       signal: new AbortController().signal,
-      callId: CallId('gitlab-e2e-1'),
+      callId: ToolCallId('gitlab-e2e-1'),
       name: 'intranet_gitlab_analyze_code_source',
       arguments: {
         projectLocator: process.env[PROJECT_ENV],

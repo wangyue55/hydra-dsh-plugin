@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
-import { CallId } from '@deepseek-ai/dsh-llm'
+import { ToolCallId } from '@deepseek-ai/dsh-llm'
 import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
 import ToolRuntime from '@deepseek-ai/dsh-tools'
 import LocalCredentialProvider from '@deepseek-ai/dsh-credentials-local'
@@ -51,7 +51,7 @@ let callCounter = 0
 function analyze(ctx: Context, args: unknown) {
   return ctx.tools.execute({
     signal: new AbortController().signal,
-    callId: CallId(`gitlab-seam-${++callCounter}`),
+    callId: ToolCallId(`gitlab-seam-${++callCounter}`),
     name: 'intranet_gitlab_analyze_code_source',
     arguments: args,
   })

@@ -37,7 +37,7 @@
     "@hydra-dsh/plugin-intranet-wiki": "workspace:^"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis-plugin-include": "^1.0.6",
+    "@deepseek-ai/cordis-plugin-include": "^1.0.7",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.19.0",
     "js-yaml": "^4.2.0",

@@ -9,13 +9,15 @@
 
 import type { Context } from '@deepseek-ai/cordis'
 import z from '@deepseek-ai/schemastery'
-import { installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings'
+// Type-only: pulls the ctx.settings Context merge; the service value comes
+// from the composed settings provider at runtime.
+import type {} from '@deepseek-ai/dsh-settings'
 
 export const name = 'ui-settings-intranet'
 export const inject: string[] = []
 
 /** Settings namespace the card is keyed on. */
-export const INTRANET_NS = settingsNamespace('intranet')
+export const INTRANET_NS = 'intranet'
 
 /**
  * The credential references the card addresses. The defaults mirror the
@@ -42,15 +44,18 @@ export const Config: z<Config> = z.object({
 })
 
 /**
- * Register the `intranet` settings section.
+ * Register the `intranet` settings section. The section is served through the
+ * settings seam when one is composed; without one the plugin stays inert.
  * @param ctx - registrant context; the settings seam is consumed when composed.
  * @param config - deployment's reference names.
  */
 export function apply(ctx: Context, config: Config): void {
-  installSettingsSection(ctx, INTRANET_NS, Config, config, {
-    // The section only names references; nothing here derives from the live
-    // value, so the source and change hooks have no work.
-    setSource: () => {},
-    onChange: () => {},
+  ctx.inject(['settings'], (settingsCtx) => {
+    settingsCtx.settings.installSection(ctx, INTRANET_NS, Config, config, {
+      // The section only names references; nothing here derives from the live
+      // value, so the source and change hooks have no work.
+      setSource: () => {},
+      onChange: () => {},
+    })
   })
 }

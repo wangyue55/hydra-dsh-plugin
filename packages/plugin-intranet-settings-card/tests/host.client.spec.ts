@@ -2,7 +2,7 @@
 
 import { Context } from '@deepseek-ai/cordis'
 import { describe, expect, it } from 'vitest'
-import { SettingsProvider, settingsNamespace, type SettingsNamespace } from '@deepseek-ai/dsh-settings'
+import { SettingsProvider, type SettingsNamespace } from '@deepseek-ai/dsh-settings'
 import * as HostHalf from '../src/index.ts'
 
 class MemorySettings extends SettingsProvider {
@@ -19,7 +19,7 @@ describe('ui-settings-intranet host', () => {
     await ctx.plugin(MemorySettings).await()
     const fiber = ctx.plugin(HostHalf, {})
     await fiber.await()
-    const ns = settingsNamespace('intranet')
+    const ns = 'intranet'
     expect(ctx.settings.get(ns)).toEqual({
       wikiBaseUrlEnv: 'INTRANET_WIKI_BASE_URL',
       wikiTokenEnv: 'INTRANET_WIKI_TOKEN',
@@ -34,7 +34,7 @@ describe('ui-settings-intranet host', () => {
     const ctx = new Context()
     await ctx.plugin(MemorySettings).await()
     await ctx.plugin(HostHalf, { wikiTokenEnv: 'INTERNAL_WIKI_TOKEN' }).await()
-    const ns = settingsNamespace('intranet')
+    const ns = 'intranet'
     expect(ctx.settings.get(ns)).toMatchObject({ wikiTokenEnv: 'INTERNAL_WIKI_TOKEN' })
     await ctx.settings.update(ns, { wikiTokenEnv: 'ANOTHER_TOKEN_REF' })
     expect(ctx.settings.get(ns)).toMatchObject({ wikiTokenEnv: 'ANOTHER_TOKEN_REF' })

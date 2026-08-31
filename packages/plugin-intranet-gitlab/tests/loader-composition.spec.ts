@@ -10,7 +10,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
 import Loader from '@deepseek-ai/cordis-plugin-loader'
 import Include from '@deepseek-ai/cordis-plugin-include'
-import { CallId } from '@deepseek-ai/dsh-llm'
+import { ToolCallId } from '@deepseek-ai/dsh-llm'
 import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
 import ToolRuntime from '@deepseek-ai/dsh-tools'
 import * as ToolGitlab from '@hydra-dsh/plugin-intranet-gitlab'
@@ -85,7 +85,7 @@ let callCounter = 0
 function callTool(ctx: Context, args: unknown) {
   return ctx.tools.execute({
     signal: new AbortController().signal,
-    callId: CallId(`gitlab-loader-${++callCounter}`),
+    callId: ToolCallId(`gitlab-loader-${++callCounter}`),
     name: 'intranet_gitlab_analyze_code_source',
     arguments: args,
   })

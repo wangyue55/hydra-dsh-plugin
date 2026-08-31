@@ -3,7 +3,7 @@
 // additionally requires an explicit sandbox parent page.
 import { afterEach, describe, expect, it } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
-import { CallId } from '@deepseek-ai/dsh-llm'
+import { ToolCallId } from '@deepseek-ai/dsh-llm'
 import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
 import ToolRuntime from '@deepseek-ai/dsh-tools'
 import * as tool from '../src/index.ts'
@@ -38,7 +38,7 @@ let callCounter = 0
 function callTool(ctx: Context, name: string, args: unknown) {
   return ctx.tools.execute({
     signal: new AbortController().signal,
-    callId: CallId(`wiki-e2e-${++callCounter}`),
+    callId: ToolCallId(`wiki-e2e-${++callCounter}`),
     name,
     arguments: args,
   })

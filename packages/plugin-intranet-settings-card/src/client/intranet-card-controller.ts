@@ -8,9 +8,9 @@
  * what is configured.
  */
 
-import type { IApiClient } from '@deepseek-ai/dsh-client-connection/client'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-runtime/client'
-import type { SettingsScope, SettingsScopeSnapshot, SnapshotStore } from '@deepseek-ai/dsh-client-runtime/client'
+import type { Context as ClientContext } from '@deepseek-ai/cordis'
+import { createSnapshotStore, type SnapshotStore } from '@deepseek-ai/dsh-client-store'
+import type { SettingsScope, SettingsScopeSnapshot } from '@deepseek-ai/dsh-client-ui-settings/client'
 
 /**
  * Namespace of the intranet credentials section. Spelled here rather than
@@ -99,11 +99,12 @@ export class IntranetCardController {
 
   /**
    * @param scope - the bound settings scope for the `intranet` namespace.
-   * @param api - wire face used for the credentials the section references.
+   * @param ctx - the card plugin's context, whose `remote.credentials`
+   * namespace answers for the credentials the section references.
    */
   constructor(
     private readonly scope: SettingsScope<IntranetSettings>,
-    private readonly api: Pick<IApiClient, 'credentials'>,
+    private readonly ctx: ClientContext,
   ) {
     this.store = createSnapshotStore(this.projection())
     scope.subscribe(() => { void this.readCredentials() })
@@ -165,17 +166,17 @@ export class IntranetCardController {
     const requested = INTRANET_FIELDS.map(field => refs[field])
     const epoch = ++this.epoch
     this.publish()
-    let response: Awaited<ReturnType<IApiClient['credentials']['describe']>>
+    let response: Awaited<ReturnType<ClientContext['remote']['credentials']['describe']>>
     try {
-      response = await this.api.credentials.describe({ refs: requested })
+      response = await this.ctx.remote.credentials.describe(requested)
     } catch (_credentialReadFailure) {
       // The card stays usable without this: controls report the last state
       // they knew, and a write still reaches the Host.
       return
     }
-    if (!response.result.ok || epoch !== this.epoch) return
+    if (!response.ok || epoch !== this.epoch) return
     for (const ref of requested) {
-      const view = response.result.value.credentials[ref]
+      const view = response.value[ref]
       this.views.set(ref, { configured: view?.configured ?? false, writable: view?.writable ?? true })
     }
     this.publish()
@@ -215,7 +216,7 @@ export class IntranetCardController {
           const value = this.staged[field]
           if (value.length === 0) continue
           try {
-            await this.api.credentials.set({ ref: refs[field], value })
+            await this.ctx.remote.credentials.set(refs[field], value)
             this.staged[field] = ''
           } catch (_credentialWriteFailure) {
             // The draft stays staged; the Host's re-described state below is
