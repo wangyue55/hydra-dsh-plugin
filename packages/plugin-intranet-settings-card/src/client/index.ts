@@ -5,17 +5,25 @@
  * credential values, addressed by the references the section names.
  */
 
-import type { ConnectionHandle } from '@deepseek-ai/dsh-client-connection/client'
+import type { Context as ClientContext } from '@deepseek-ai/cordis'
 // Type-only: pulls the locale plugin's Context merge (ctx.locale).
 import type {} from '@deepseek-ai/dsh-client-locale/client'
 // Type-only: the ctx.settingsScope Context merge. Cross-plugin collaboration
 // goes through the service, never a value import (client bundle purity gate).
 import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
+// Type-only: the ctx.slots Context merge (the renderer owns the registry).
+import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 // Type-only: the 'settings.plugin.item' SlotMap declaration.
 import type {} from '@deepseek-ai/dsh-client-ui-settings-plugins/client'
-import type { ClientContext } from '@deepseek-ai/dsh-client-runtime/client'
 // Type-only: the ctx.remote Context merge and the forwarded-event key face.
 import type {} from '@deepseek-ai/dsh-api-remotes/client'
+// Type-only: the forwarded-event allowlist seat that types `$on` payloads.
+import type {} from '@deepseek-ai/dsh-api-remotes/types'
+// Type-only: the owner package's Events declaration `$on` hands to a listener
+// (`credentials/reference-updated` payload). Imported directly because the
+// api-remotes lib chain resolves peers from the pnpm virtual store, where the
+// consumer-provided peer is not present.
+import type {} from '@deepseek-ai/dsh-credentials/types'
 import { IntranetCard } from './IntranetCard.tsx'
 import { INTRANET_NS, IntranetCardController } from './intranet-card-controller.ts'
 import type { IntranetSettings } from './intranet-card-controller.ts'
@@ -39,19 +47,18 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
 const NS = 'settings.intranet'
 
 /** Required services (cordis fiber inject). */
-export const inject = ['slots', 'locale', 'connection', 'remote', 'settingsScope']
+export const inject = ['slots', 'locale', 'remote', 'remote.credentials', 'settingsScope']
 
 /**
  * Mount the intranet credentials card.
  * @param ctx - the browser plugin context.
  */
 export function apply(ctx: ClientContext): void {
-  const { api } = ctx.get('connection') as ConnectionHandle
   ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'ui-settings-intranet: card dictionaries')
 
   const controller = new IntranetCardController(
     ctx.settingsScope.bind<IntranetSettings>({ namespace: INTRANET_NS }),
-    api,
+    ctx,
   )
 
   // A credential written on another surface (the same references are plain
