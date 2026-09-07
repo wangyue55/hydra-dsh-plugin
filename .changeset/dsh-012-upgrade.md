@@ -3,7 +3,6 @@
 "@hydra-dsh/plugin-intranet-wiki": patch
 "@hydra-dsh/plugin-intranet-gitlab": patch
 "@hydra-dsh/intranet": patch
-"@hydra-dsh/plugin-notify": patch
 "@hydra-dsh/plugin-hello": patch
 ---
 

@@ -5,15 +5,15 @@
 ## 安装 / 升级 / 卸载
 
 ```sh
-dsh plugin --profile web add @hydra-dsh/plugin-notify
+dsh plugin --profile web add @hydra-dsh/plugin-hello
 ```
 
 ```sh
-dsh plugin --profile web update @hydra-dsh/plugin-notify
+dsh plugin --profile web update @hydra-dsh/plugin-hello
 ```
 
 ```sh
-dsh plugin --profile web remove @hydra-dsh/plugin-notify
+dsh plugin --profile web remove @hydra-dsh/plugin-hello
 ```
 
 `--profile web` 是 dsh 的默认 Web profile；其他 profile 换名字即可。命令会把包装进 `~/.dsh/profiles/<name>/` 并自动登记/移除对应的配置层。卸载不影响已保存的凭据（`~/.dsh/.credentials.yaml` 独立于插件存在），重装后无需重填。
@@ -32,15 +32,15 @@ dsh plugin --profile web remove @hydra-dsh/plugin-notify
 每个插件的可配置项见其 README 的配置表。覆盖写在 `~/.dsh/profiles/<name>/cordis.patch.yml`，按行 id 定位，**整个 `config` 替换**（不深合并——想保留的字段要一起写全）：
 
 ```yaml
-- id: hydra-notify
+- id: hydra-hello
   config:
-    sound: Glass
+    greeting: 你好
 ```
 
 临时停用一个插件而不卸载：
 
 ```yaml
-- id: hydra-notify
+- id: hydra-hello
   disabled: true
 ```
 
@@ -54,14 +54,13 @@ dsh --profile web --dump-config
 
 - **装了但没生效**：多半是没重启 profile。先 `--dump-config` 确认层存在，再重启。
 - **启动报错找不到模块**：若曾从本地目录安装（link 方式），确认那个目录仍存在且已构建；不再需要时 `remove` 掉。
-- **macOS 通知不弹**（plugin-notify）：首次触发时系统会请求"脚本编辑器"的通知权限，到系统设置里允许即可。
 
 ## 从源码安装（尝鲜 / 内测）
 
 npm 之外也支持 git 直装（monorepo 子目录用 pnpm 的 `path:` 选择器）：
 
 ```sh
-dsh plugin --profile web add "github:<owner>/hydra-dsh-plugins#<commit>&path:/packages/plugin-notify"
+dsh plugin --profile web add "github:<owner>/hydra-dsh-plugins#<commit>&path:/packages/plugin-hello"
 ```
 
 git 装到的是源码，安装时要运行包的 `prepare` 构建脚本；pnpm ≥10 默认拒绝，并提示把包名加进 profile 的 `pnpm-workspace.yaml` 的 `allowBuilds`。**这一步等于授权在安装期、agent 沙箱之外执行该包的代码**：只安装信任的来源，并固定 commit。不想给这个授权就走 npm 安装——预构建产物，无需任何脚本放行。
