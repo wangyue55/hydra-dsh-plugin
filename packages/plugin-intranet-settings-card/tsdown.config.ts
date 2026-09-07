@@ -5,7 +5,7 @@ import { defineConfig } from 'tsdown'
 
 const ID = '@hydra-dsh/plugin-intranet-settings-card'
 
-// 宿主 module-table 能应答的说明符：dsh 0.1.2-alpha.2 的平台基线
+// 宿主 module-table 能应答的说明符：dsh 0.1.2-rc.1 的平台基线
 // （PLATFORM_MODULES + PRELOADED_CLIENT_EXTERNALS）加本包 dsh.client.inject
 // 各包的 /client 行。表内保持 external 由 require 解析；其余全部内联。
 // dsh 升级时须对照上游 packages/client/web/src/platform.ts 核对基线。
