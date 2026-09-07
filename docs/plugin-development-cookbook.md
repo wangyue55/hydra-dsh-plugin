@@ -47,7 +47,21 @@ dsh --profile dev --dump-config
 | 浏览器端 | 真实 `dsh web` 启动：`/plugins/<包名>/client.js` 返回 200 + 设置页/槽位实际渲染 | 带 `dsh.client` 的插件 |
 | 真机 | 手动 checklist 写进 PR | 不可自动化的效果（系统弹窗、声音等） |
 
-注意 **CI 在 ubuntu**：darwin 路径必须显式 stub 平台（参照 plugin-notify 测试里的 `withPlatform`）。
+注意 **CI 在 ubuntu**：darwin 路径必须显式 stub 平台，测试里包一层 `withPlatform`——
+
+```ts
+function withPlatform(platform: string, run: () => void) {
+  const original = Object.getOwnPropertyDescriptor(process, 'platform')!
+  Object.defineProperty(process, 'platform', { value: platform })
+  try {
+    run()
+  } finally {
+    Object.defineProperty(process, 'platform', original)
+  }
+}
+```
+
+`finally` 里恢复原描述符是关键：漏掉会把改过的 `process.platform` 泄漏给同文件后续用例。
 
 ## 3.5 浏览器端插件（`dsh.client`，进阶）
 
